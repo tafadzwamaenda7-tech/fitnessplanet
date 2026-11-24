@@ -1,6 +1,4 @@
-# MiGym Fitness Club
-
-https://migym.co.zw/ create a cone
+# Fitnessplanet
 
 This project was built with [Lovable](https://lovable.dev).
 

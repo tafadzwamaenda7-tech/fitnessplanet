@@ -1,227 +1,375 @@
+import { Reveal } from "@/components/Reveal";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ProgramsCarousel } from "@/components/ProgramsCarousel";
-import { JoinNowBanner } from "@/components/SiteChrome";
-import { MEMBERSHIP_TIERS, MIGYM_ASSETS } from "@/data/migym";
+import { ClassPreview } from "@/components/ClassPreview";
+import { CoachList } from "@/components/CoachList";
+import {
+  FITNESSPLANET_ASSETS,
+  FITNESSPLANET_CONTACT,
+  FITNESSPLANET_IMAGES,
+  MEMBERSHIP_TIERS,
+  TRAINING_PATHS,
+} from "@/data/fitnessplanet";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MiGym Harare | Join Harare's premium gym and fitness community" },
+      { title: "Fitnessplanet Harare | Gym, Classes & Coaching" },
       {
         name: "description",
         content:
-          "Join MiGym Harare at 216 Rolf Ave for Technogym equipment, CrossFit, HYROX, MiHIIT, MiSpin, personal training, pool, and Raw Roots Co.",
+          "Fitnessplanet Harare at Harare Show Grounds, Stand 126. Gym floor, cardio, aerobics, boxing, karate, CrossFit, HYROX, HIIT, Spin, coaching, sauna, pool, and Raw Roots Co.",
       },
-      { property: "og:title", content: "MiGym Harare | Join Harare's premium gym and fitness community" },
+      {
+        property: "og:title",
+        content: "Fitnessplanet Harare | Gym, Classes & Coaching",
+      },
       {
         property: "og:description",
         content:
-          "Join MiGym Harare at 216 Rolf Ave for Technogym equipment, CrossFit, HYROX, MiHIIT, MiSpin, personal training, pool, and Raw Roots Co.",
+          "Fitnessplanet Harare at Harare Show Grounds, Stand 126. Gym floor, cardio, aerobics, boxing, karate, CrossFit, HYROX, HIIT, Spin, coaching, sauna, pool, and Raw Roots Co.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: MIGYM_ASSETS.aboutPhoto },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: MIGYM_ASSETS.aboutPhoto },
     ],
   }),
   component: Index,
 });
 
+const bentoImages = [
+  FITNESSPLANET_IMAGES.floor,
+  FITNESSPLANET_IMAGES.classes,
+  FITNESSPLANET_IMAGES.coaching,
+  FITNESSPLANET_IMAGES.recovery,
+];
+
 function Index() {
   return (
     <>
-      {/* Hero with looping video */}
-      <section className="relative flex min-h-[76vh] items-center justify-center overflow-hidden bg-surface-dark text-center text-surface-dark-foreground">
+      {/* Hero — original video/centred-slogan/button structure, rebranded */}
+      <section className="fp-original-hero" aria-label="Fitnessplanet Harare" data-hero-spatial>
         <video
+          className="fp-original-hero__video"
           autoPlay
-          muted
           loop
+          muted
           playsInline
-          poster={MIGYM_ASSETS.aboutPhoto}
-          className="absolute inset-0 h-full w-full object-cover"
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
         >
-          <source src={MIGYM_ASSETS.heroVideo} type="video/mp4" />
+          <source src="/hero/fitnessplanet-hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-surface-dark/55" />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-4 py-24 sm:px-6">
-          <h1 className="text-[clamp(1.45rem,6.8vw,4.5rem)] font-extrabold leading-tight tracking-tight">
-            M<span className="text-primary">i</span>F<span className="text-primary">i</span>tness.M
-            <span className="text-primary">i</span>Future.M<span className="text-primary">i</span>L
-            <span className="text-primary">i</span>fe
-          </h1>
-          <div className="mt-8">
-            <Link to="/contact" className="btn-migym-yellow">
-              Join Now
-            </Link>
-          </div>
+        <div className="fp-original-hero__inner">
+          <h1 className="sr-only">Fitnessplanet Harare gym, classes and coaching</h1>
+          <img
+            className="fp-original-hero__slogan"
+            width={2344}
+            height={219}
+            src="/hero/fitnessplanet-slogan.svg"
+            alt="Fitnessplanet"
+          />
+
+          <a className="fp-original-hero__button" href="/contact">
+            Join Now
+          </a>
         </div>
       </section>
 
-      {/* About Us */}
-      <section className="bg-background py-20">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
-          <div>
-            <h2 className="migym-heading text-3xl text-foreground sm:text-4xl">About Us</h2>
-            <span className="migym-yellow-bar mt-4" />
-            <p className="mt-7 text-sm leading-7 text-muted-foreground sm:text-base">
-              At MiGym, the focus is on personal choice and individual goals. No one can force you to go to the gym or
-              exercise, but it’s your own decision and goals that will determine your outcomes and results. MiGym Harare
-              provides a supportive environment where you can challenge yourself, not to outdo others, but to improve
-              yourself and achieve your own victories. We recognise that everyone has unique goals, whether it’s getting
-              fit, gaining strength, staying healthy, or losing weight. That’s why MiGym Harare offers a variety of
-              exercise options to suit your individual needs. With personal support and guidance, the journey to a
-              healthier life becomes less daunting and more achievable.
-            </p>
-          </div>
-          <div>
-            <img
-              src={MIGYM_ASSETS.aboutPhoto}
-              alt="MiGym Harare main training floor"
-              className="w-full object-cover shadow-md"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Memberships */}
-      <section className="relative overflow-hidden bg-surface-dark py-20 text-surface-dark-foreground">
-        <img
-          src={MIGYM_ASSETS.membershipsBg}
-          alt="MiGym group training session"
-          className="absolute inset-0 h-full w-full object-cover opacity-45"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-surface-dark/90 via-surface-dark/75 to-surface-dark/65" />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-6">
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-                {MEMBERSHIP_TIERS.map((tier) => (
-                  <div key={tier.name} className="flex flex-col overflow-hidden rounded-xl text-center">
-                    <div className="flex-1 bg-tier-header px-4 py-5 text-primary-foreground">
-                      <h3 className="text-base font-bold uppercase tracking-wide">{tier.name}</h3>
-                      <p className="mt-2 text-xs leading-relaxed text-primary-foreground/90">{tier.description}</p>
-                    </div>
-                    <div className="bg-tier-price px-4 py-6 text-primary-foreground">
-                      <div className="flex items-start justify-center font-extrabold leading-none">
-                        <span className="mt-1 text-base opacity-80">$</span>
-                        <span className="text-4xl tracking-tight">{tier.price}</span>
-                        {tier.period && <span className="self-end pb-1 text-sm font-semibold opacity-80">{tier.period}</span>}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-8 text-xs leading-relaxed text-surface-dark-foreground/85 sm:text-sm">
-                <strong className="font-bold text-surface-dark-foreground">Please note:</strong> To provide the best
-                training experience, MiGym now operates on membership-based access only. All new members are required to
-                pay a once-off $30 sign-up fee, which covers administration and a full induction at MiGym.
+      <section className="fp-facts" aria-label="Fitnessplanet at a glance">
+        <div className="section-shell">
+          <div className="fp-facts__surface" data-enter>
+            <div className="fp-facts__item">
+              <p className="fp-kicker">Location</p>
+              <p className="fp-facts__value">{FITNESSPLANET_CONTACT.address}</p>
+            </div>
+            <div className="fp-facts__item">
+              <p className="fp-kicker">Opening hours</p>
+              <p className="fp-facts__value">
+                {FITNESSPLANET_CONTACT.hours.map((row) => `${row.days} ${row.time}`).join(" · ")}
               </p>
             </div>
-
-            <div className="lg:col-span-5 lg:pt-6">
-              <h2 className="migym-heading text-3xl text-surface-dark-foreground/60 sm:text-4xl">Memberships</h2>
-              <span className="migym-yellow-bar mt-4" />
-              <p className="mt-7 text-sm leading-7 text-surface-dark-foreground/90 sm:text-base">
-                At MiGym we offer a range of membership options to suit different training needs. Membership accounts
-                can be set up at reception during our opening hours.
-              </p>
-              <p className="mt-4 text-sm leading-7 text-surface-dark-foreground/90 sm:text-base">
-                All membership types provide full gym access, including participation in all scheduled classes. Payments
-                can be made monthly or for a set term paid in full upfront. Payment for your first month is required at
-                the time of sign-up.
-              </p>
+            <div className="fp-facts__item">
+              <p className="fp-kicker">Reception</p>
+              <a href={FITNESSPLANET_CONTACT.phoneHref} className="fp-facts__value fp-facts__phone">
+                {FITNESSPLANET_CONTACT.phone}
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Book a Class Buttons + Yellow Chevron Divider */}
-      <section className="relative bg-background pt-14">
-        <div className="mx-auto flex max-w-4xl flex-col items-center justify-center gap-6 px-6 pb-16 sm:flex-row sm:gap-12">
-          <Link to="/classes" className="btn-migym-dark w-full sm:w-auto sm:min-w-[290px]">
-            Members - Book a Class
-          </Link>
-          <Link to="/contact" className="btn-migym-dark w-full sm:w-auto sm:min-w-[290px]">
-            Non-members - Book a Class
-          </Link>
-        </div>
-        <div className="w-full overflow-hidden leading-none">
-          <svg viewBox="0 0 1280 56" preserveAspectRatio="none" className="block h-10 w-full sm:h-14" aria-hidden="true">
-            <polygon points="0,0 640,52 1280,0 1280,56 0,56" className="fill-primary" />
-          </svg>
-        </div>
-      </section>
-
-      {/* 7-Slide Programs Carousel */}
-      <ProgramsCarousel />
-
-      {/* Our Team with curved top wave */}
-      <section className="relative bg-surface-dark pb-20 text-surface-dark-foreground">
-        <div className="w-full overflow-hidden bg-background leading-none">
-          <svg viewBox="0 0 1440 110" preserveAspectRatio="none" className="block h-16 w-full sm:h-24" aria-hidden="true">
-            <path d="M0,0 C360,95 960,115 1440,100 L1440,110 L0,110 Z" className="fill-surface-dark" />
-          </svg>
-        </div>
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 pt-6 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <h2 className="migym-heading text-3xl sm:text-4xl">Our Team</h2>
-            <p className="mt-6 text-sm leading-7 text-surface-dark-foreground/85 sm:text-base">
-              At MiGym, our team is made up of dedicated fitness professionals who are passionate about helping you
-              achieve your health goals. From personal trainers to class instructors, we have the expertise to guide and
-              motivate you on your fitness journey.
-            </p>
-            <div className="mt-8">
-              <Link to="/trainers" className="btn-migym-yellow">
-                Learn More
+      <section className="fp-inside" aria-labelledby="inside-heading">
+        <div className="section-shell fp-inside__layout">
+          <div className="fp-inside__gallery" data-spatial>
+            <Reveal>
+              <span className="fp-image fp-image--wide" data-reveal>
+                <img
+                  src={FITNESSPLANET_IMAGES.insideWide}
+                  alt="Fitnessplanet training footage"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </Reveal>
+            <Reveal>
+              <span className="fp-image fp-image--square" data-reveal data-reveal-delay="80">
+                <img
+                  src={FITNESSPLANET_IMAGES.insideTop}
+                  alt="Fitnessplanet training footage"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </Reveal>
+            <Reveal>
+              <span className="fp-image fp-image--square" data-reveal data-reveal-delay="160">
+                <img
+                  src={FITNESSPLANET_IMAGES.insideSmall}
+                  alt="Fitnessplanet training footage"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </Reveal>
+          </div>
+          <Reveal>
+            <div className="fp-inside__copy" data-reveal>
+              <h2 id="inside-heading" className="fp-section-title fp-section-title--lead">
+                A real training floor, not a concept.
+              </h2>
+              <p className="fp-lead fp-muted">
+                Train on the floor, join a scheduled class, then cool down and refuel without
+                leaving Harare Show Grounds. The pool, sauna, cold plunge and Raw Roots Co. are part
+                of the same visit.
+              </p>
+              <Link to="/facilities" className="fp-text-link fp-text-link--ink">
+                See the facilities
               </Link>
             </div>
-          </div>
-          <div className="md:col-span-7">
-            <img
-              src={MIGYM_ASSETS.teamPhoto}
-              alt="MiGym personal trainer coaching a member"
-              className="max-h-[460px] w-full object-cover shadow-2xl"
-            />
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Our Facilities */}
-      <section className="bg-background py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <h2 className="migym-heading text-3xl text-muted-foreground/55 sm:text-4xl">Our Facilities</h2>
-          <span className="migym-yellow-bar mt-4" />
-          <p className="mt-7 max-w-5xl text-sm leading-7 text-foreground/85 sm:text-base">
-            At MiGym, we offer state-of-the-art facilities that cater to all your fitness needs. Our gym sections are
-            equipped with the latest Technogym fitness equipment and technology, including free weights, cardio
-            machines, and strength training equipment. Our spacious and modern change rooms provide a comfortable and
-            private space for you to prepare for your workout. Cool off with a refreshing swim in our pristine pool, or
-            refuel at Raw Roots Co. with a delicious and healthy meal.
-          </p>
+      <section className="fp-bento" aria-labelledby="training-heading">
+        <div className="section-shell">
+          <div className="fp-bento__head">
+            <h2 id="training-heading" className="fp-section-title fp-section-title--compact">
+              Pick your kind of session.
+            </h2>
+          </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {MIGYM_ASSETS.facilities.map((item) => (
-              <div key={item.title} className="overflow-hidden">
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  className="aspect-[3/2] w-full object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </div>
+          <div className="fp-bento__grid" data-spatial>
+            {TRAINING_PATHS.map((path, index) => (
+              <Reveal key={path.title}>
+                <article
+                  className={`fp-bento__cell fp-bento__cell--${index + 1}`}
+                  data-reveal
+                  data-reveal-delay={index * 80}
+                >
+                  <span className="fp-image">
+                    <img src={bentoImages[index]} alt="" loading="lazy" decoding="async" />
+                  </span>
+                  <div>
+                    <h3 className="fp-bento__title">{path.title}</h3>
+                    <p className="fp-bento__copy">{path.sentence}</p>
+                  </div>
+                  <Link
+                    to={path.to}
+                    {...(path.hash ? { hash: path.hash } : {})}
+                    className="fp-text-link fp-text-link--ink"
+                  >
+                    {path.linkLabel}
+                  </Link>
+                </article>
+              </Reveal>
             ))}
           </div>
-
-          <div className="mt-12 text-center">
-            <Link to="/facilities" className="btn-migym-dark">
-              Learn More
-            </Link>
-          </div>
         </div>
       </section>
 
-      <JoinNowBanner />
+      <section className="fp-rates" aria-labelledby="rates-heading">
+        <div className="section-shell fp-rates__layout">
+          <Reveal>
+            <div className="fp-rates__copy" data-reveal>
+              <h2 id="rates-heading" className="fp-section-title fp-section-title--compact">
+                Membership rates.
+              </h2>
+              <p className="fp-lead">
+                Every membership includes full gym access and all scheduled classes. Accounts are
+                set up at reception during opening hours.
+              </p>
+              <p className="fp-rates__small">
+                Payments can be made monthly or for a set term paid in full upfront. Your first
+                month is paid at sign-up. All new members pay a once-off $30 sign-up fee, which
+                covers administration and a full induction at Fitnessplanet.
+              </p>
+              <a
+                href={FITNESSPLANET_CONTACT.phoneHref}
+                className="fp-text-link fp-text-link--ink fp-text-link--stack fp-rates__action"
+              >
+                <span>Join at reception</span>
+                <small>{FITNESSPLANET_CONTACT.phone}</small>
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div data-reveal data-reveal-delay="80">
+              <table className="fp-rates__table">
+                <caption className="sr-only">Fitnessplanet membership rates</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Plan</th>
+                    <th scope="col">Access</th>
+                    <th scope="col">Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {MEMBERSHIP_TIERS.map((tier) => (
+                    <tr key={tier.name}>
+                      <th scope="row">{tier.name}</th>
+                      <td>{tier.description}</td>
+                      <td>
+                        <span className="fp-rates__price">
+                          <span aria-hidden="true">$</span>
+                          <span className="sr-only">USD </span>
+                          {tier.price}
+                          {tier.period && <small>{tier.period}</small>}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <ClassPreview />
+
+      <section className="fp-coaches" aria-labelledby="home-coaches-heading">
+        <div className="section-shell fp-coaches__layout">
+          <Reveal>
+            <div data-reveal>
+              <span className="fp-image fp-image--tall">
+                <img
+                  src={FITNESSPLANET_IMAGES.coaching}
+                  alt="Fitnessplanet coaching footage"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div data-reveal data-reveal-delay="80">
+              <h2 id="home-coaches-heading" className="fp-section-title fp-section-title--compact">
+                Start with the people who coach you.
+              </h2>
+              <div className="fp-coaches__note">
+                <p>
+                  Charlene and Clive help members choose a starting point. Tell reception what you
+                  want to work on and book a session when you are ready.
+                </p>
+              </div>
+              <div className="mt-8">
+                <CoachList />
+              </div>
+              <Link to="/trainers" className="fp-text-link fp-text-link--ink mt-8">
+                Meet the coaches
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="fp-facilities-home" aria-labelledby="home-facilities-heading">
+        <div className="section-shell fp-facilities-home__layout">
+          <div className="fp-facilities-home__images" data-spatial>
+            <Reveal>
+              <span className="fp-image fp-image--wide" data-reveal>
+                <img
+                  src={FITNESSPLANET_IMAGES.insideTop}
+                  alt="Fitnessplanet training footage"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </Reveal>
+            <Reveal>
+              <span className="fp-image fp-image--square" data-reveal data-reveal-delay="80">
+                <img
+                  src={FITNESSPLANET_IMAGES.recovery}
+                  alt="Fitnessplanet training footage"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </Reveal>
+          </div>
+          <Reveal>
+            <div data-reveal data-reveal-delay="80">
+              <h2
+                id="home-facilities-heading"
+                className="fp-section-title fp-section-title--compact"
+              >
+                Everything in one place.
+              </h2>
+              <p className="fp-lead fp-muted">
+                The floor, studios, pool, sauna, cold plunge and Raw Roots Co. are all part of the
+                same visit.
+              </p>
+              <div className="fp-facility-list">
+                {FITNESSPLANET_ASSETS.facilities.map((item, index) => (
+                  <Reveal key={item.title}>
+                    <div data-reveal data-reveal-delay={index * 70}>
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+              <Link to="/facilities" className="fp-text-link fp-text-link--ink mt-8">
+                Read the full facilities guide
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="fp-home-visit" aria-labelledby="final-heading">
+        <div className="section-shell fp-home-visit__layout">
+          <Reveal>
+            <span className="fp-image fp-image--wide" data-reveal>
+              <img
+                src={FITNESSPLANET_IMAGES.insideSmall}
+                alt="Fitnessplanet training footage"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          </Reveal>
+          <Reveal>
+            <div data-reveal data-reveal-delay="80">
+              <h2 id="final-heading" className="fp-section-title fp-section-title--compact">
+                Visit during opening hours.
+              </h2>
+              <p className="fp-lead fp-muted">
+                Ask reception your questions and choose the right access for you.
+              </p>
+              <a
+                href={FITNESSPLANET_CONTACT.phoneHref}
+                className="fp-text-link fp-text-link--ink fp-text-link--stack"
+              >
+                <span>Plan your visit</span>
+                <small>{FITNESSPLANET_CONTACT.phone}</small>
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </>
   );
 }
